@@ -3,25 +3,43 @@ import React, { useState } from "react";
 export default function TextForm(props) {
   const [text, setText] = useState("Enter your text");
   const [mystyle, setstyle] = useState({});
-  const [btnText, setBtnText] = useState("Light");
+  const [btnText, setBtnText] = useState("Text Light Mode");
   const [btnStyle, setBtnStyle] = useState({
     color: "black",
     backgroundColor: "white",
     borderColor: "black",
     borderStyle: "solid",
-    fontWeight: "bold"
+    fontWeight: "bold",
   });
 
   function handleClick() {
-    setText(text.toUpperCase());
+    if(text.trim()){
+      setText(text.toUpperCase());
+      props.showAlert(
+        "Converted to UpperCase",
+        "Success"
+      )
+    }
   }
 
   function handleClickToLower() {
+  if(text.trim()){
     setText(text.toLowerCase());
+    props.showAlert(
+      "Converted to LowerCase",
+      "Success"
+    )
+  }
   }
 
   function handleClickToClearAll() {
+  if(text.trim()){
     setText("");
+    props.showAlert(
+      "All text has been cleared!",
+      "Success"
+    )
+  }
   }
   function handleChange(e) {
     setText(e.target.value);
@@ -38,8 +56,9 @@ export default function TextForm(props) {
         backgroundColor: "black",
         borderColor: "white",
         borderStyle: "solid",
+        fontWeight: "bold",
       });
-      setBtnText("Dark");
+      setBtnText("Text Dark Mode");
     } else {
       setstyle({});
       setBtnStyle({
@@ -47,9 +66,28 @@ export default function TextForm(props) {
         backgroundColor: "white",
         borderColor: "black",
         borderStyle: "solid",
+        fontWeight: "bold",
       });
-      setBtnText("light");
+      setBtnText("Text Light Mode");
     }
+  }
+
+  function handleClickToCapitalize() {
+     if(text.trim()){
+      let formatedString = text
+      .trim()
+      .split(".")
+      .map((ele) => {
+        ele = ele.trim();
+        return ele.charAt(0).toUpperCase() + ele.slice(1);
+      });
+
+    setText(formatedString.join(". "));
+    props.showAlert(
+      "Sentences capitalized successfully!",
+      "Success"
+    )
+     }
   }
   return (
     <>
@@ -66,26 +104,44 @@ export default function TextForm(props) {
           {" "}
         </textarea>
       </div>
-      <button className="btn btn-primary mx-2" style={{ fontWeight: "bold" }} onClick={handleClick}>
+      <button
+        className="btn btn-primary mx-2 my-2"
+        style={{ fontWeight: "bold" }}
+        onClick={handleClick}
+      >
         Convert to Uppercase
       </button>
-      <button className="btn btn-primary mx-2" style={{ fontWeight: "bold" }} onClick={handleClickToLower}>
+      <button
+        className="btn btn-primary mx-2 my-2"
+        style={{ fontWeight: "bold" }}
+        onClick={handleClickToLower}
+      >
         Convert to Lowercase
       </button>
-      <button className="btn btn-danger mx-2" style={{ fontWeight: "bold" }} onClick={handleClickToClearAll}>
+      <button
+        className="btn btn-danger mx-2 my-2"
+        style={{ fontWeight: "bold" }}
+        onClick={handleClickToClearAll}
+      >
         Clear All
       </button>
       <button
         type="button"
-        className="btn"
-        
+        className="btn mx-2 my-2"
         style={btnStyle}
         onClick={changeMode}
       >
         {btnText}
       </button>
+      <button
+        className="btn btn-primary mx-2 my-2"
+        style={{ fontWeight: "bold" }}
+        onClick={handleClickToCapitalize}
+      >
+        Capitalize Sentences
+      </button>
 
-      <div className="container my-3">
+      <div className="container my-3 my-2">
         <h2>Your text Summary</h2>
         <p>
           {text.split(" ").length} words and {text.length} characters
