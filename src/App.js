@@ -24,10 +24,12 @@ function App() {
     if(mode == 'light'){
       setMode('dark')
       showAlert("Dark mode has been enabled","Success")
+      document.title ="TextUtils -Dark Mode"
     }
     else{
       setMode('light')
       showAlert("Light mode has been enabled","Success")
+      document.title ="TextUtils -Light Mode"
     }
   }
   
