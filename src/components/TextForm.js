@@ -12,6 +12,17 @@ export default function TextForm(props) {
     fontWeight: "bold",
   });
 
+  const customTextArea = {
+    width: "100%",
+    minHeight: "150px",
+    padding: "10px",
+    fontSize: "16px",
+    border: "2px solid #ccc",
+    borderRadius: "8px",
+    outline: "none",
+    transition: "border-color 0.3s, box-shadow 0.3s"
+  };
+
   function handleClick() {
     if(text.trim()){
       setText(text.toUpperCase());
@@ -95,7 +106,7 @@ export default function TextForm(props) {
         <h1>{props.heading}</h1>
         <textarea
           className="form-control"
-          style={mystyle}
+          style={{ ...mystyle, ...customTextArea }}
           id="mybox"
           rows="7"
           value={text}
